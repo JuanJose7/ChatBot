@@ -13,6 +13,8 @@
 %% (actualizar estos datos en ./datos_tfg.tex)
 \input{datos_tfg}
 
+\usepackage{graphicx}
+
 %% -----------------------------------------------
 %% Importación de otros paquetes de LaTeX a usar en el desarrollo del TFG:
 %% (veanse algunos ejemplos como listings (para incluir código), todonotes (para poner anotaciones al margen con cosas por hacer), etc.
@@ -85,22 +87,27 @@
 %%-----------------------------------------------
 %% Documento:
 \begin{document}
+
 \input{include/portada}
 
 %%-----------------------------------------------
 %% Numeración romana:
 \frontmatter
 %%-----------------------------------------------
+
 \input{secciones/resumen}
+
+\setcounter{secnumdepth}{5}  
+\setcounter{tocdepth}{5}    
 \tableofcontents
 
-\cleardoublepage
-\addcontentsline{toc}{chapter}{Lista de figuras} % para que aparezca en el indice de contenidos
-\listoffigures % indice de figuras
+%%\cleardoublepage
+%%\addcontentsline{toc}{chapter}{Lista de figuras} % para que aparezca en el indice de contenidos
+%%\listoffigures % indice de figuras
 
-\cleardoublepage
-\addcontentsline{toc}{chapter}{Lista de tablas} % para que aparezca en el indice de contenidos
-\listoftables % indice de tablas
+%%\cleardoublepage
+%%\addcontentsline{toc}{chapter}{Lista de tablas} % para que aparezca en el indice de contenidos
+%%\listoftables % indice de tablas
 
 %%-----------------------------------------------
 %% Numeración arábiga:
