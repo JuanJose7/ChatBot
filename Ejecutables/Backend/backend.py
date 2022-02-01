@@ -2,8 +2,6 @@ import http.server
 import socketserver
 from http import HTTPStatus
 from routes import routes
-from model.sala import Sala
-from manager.salasManager import SalasManager
 
 class Handler(http.server.SimpleHTTPRequestHandler):
     
@@ -27,17 +25,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.wfile.write(content)
 
 
-print ("Creando salas...")
-salas = [
-    Sala(0, "Sala 1", 4, 0),
-    Sala(1, "Sala 2", 3, 0),
-    Sala(2, "Sala 3", 6, 0),
-    Sala(3, "Sala 4", 5, 0),
-    Sala(4, "Sala 5", 4, 0),
-]
-managerSalas = SalasManager(salas)
-managerSalas.printStatus()
 
-print ("Ejecutando server...")
-httpd = socketserver.TCPServer(('', 8000), Handler)
-httpd.serve_forever()
+
+#print ("Ejecutando server...")
+#httpd = socketserver.TCPServer(('', 8000), Handler)
+#httpd.serve_forever()
