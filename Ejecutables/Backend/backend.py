@@ -1,13 +1,18 @@
 import http.server
 import socketserver
-from http import HTTPStatus
+import threading
+
+from emulator.emulator import Emulator
+
 from routes import routes
 
+emulator = Emulator()
+
 class Handler(http.server.SimpleHTTPRequestHandler):
-    
+
     def do_GET(self):
         self.respond()
-    
+
     def do_POST(self):
         self.respond()
 
@@ -17,8 +22,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.end_headers()
 
         print("Route ", self.path)
-        print("Send ", routes[self.path])
-        return bytes(routes[self.path], "UTF-8") 
+        print("Numero de gente", emulator.salasManager.getPeopleNumber(3))
+        return bytes(routes[self.path], "UTF-8")
 
     def respond(self):
         content = self.handle_http(200, 'text/html')
@@ -26,7 +31,12 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 
 
+def emulatorexecute():
+    emulator.execute()
 
-#print ("Ejecutando server...")
-#httpd = socketserver.TCPServer(('', 8000), Handler)
-#httpd.serve_forever()
+hilo = threading.Thread(target=emulatorexecute)
+hilo.start()
+
+print("Ejecutando server...")
+httpd = socketserver.TCPServer(('', 8000), Handler)
+httpd.serve_forever()

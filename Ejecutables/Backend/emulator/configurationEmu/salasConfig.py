@@ -1,5 +1,5 @@
-from modelEmu.sala import Sala
-from modelEmu.sensor import Sensor
+from ..modelEmu.sala import Sala
+from ..modelEmu.sensor import Sensor
 
 salas = [
     Sala("Sala 1", 0, 4, 0),
