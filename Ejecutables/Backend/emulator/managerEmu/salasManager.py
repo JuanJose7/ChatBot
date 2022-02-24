@@ -1,7 +1,7 @@
 from Backend.emulator.configurationEmu.salasConfig import salas, sensores
 
-class SalasManager:
 
+class SalasManager:
 
     def __init__(self, salasfield):
         self.salas = salasfield
@@ -17,6 +17,10 @@ class SalasManager:
 
     def getPeopleNumber(self, idSala):
         return self.salas[idSala].ocupacion
+
+
+    def infoSalaJson (self, idSala):
+        return str(self.salas[idSala].toJson())
 
 
     def printStatus(self):

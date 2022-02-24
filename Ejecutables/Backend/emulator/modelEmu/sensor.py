@@ -1,3 +1,5 @@
+import json
+
 class Sensor:
 
     # init method or constructor   
@@ -23,3 +25,6 @@ class Sensor:
 
     def executeaccion(self, accion):
         return self.sala.executeAccion(accion)
+
+    def toJson(self):
+        return json.dumps(self.__dict__)

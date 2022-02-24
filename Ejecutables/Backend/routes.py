@@ -1,4 +1,4 @@
 routes = {
-    "/" : "Hello World",
-    "/salas" : "El numero de salas es: 5"
+    "/": "Hello World",
+    "/salas": "El numero de salas es: 5"
 }

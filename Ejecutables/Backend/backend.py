@@ -22,17 +22,17 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.end_headers()
 
         print("Route ", self.path)
-        print("Numero de gente", emulator.salasManager.getPeopleNumber(3))
-        return bytes(routes[self.path], "UTF-8")
+
+        return bytes(emulator.salasManager.infoSalaJson(3), "UTF-8")
 
     def respond(self):
         content = self.handle_http(200, 'text/html')
         self.wfile.write(content)
 
 
-
 def emulatorexecute():
     emulator.execute()
+    print(emulator.salasManager.salas[2].toJson())
 
 hilo = threading.Thread(target=emulatorexecute)
 hilo.start()

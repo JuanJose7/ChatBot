@@ -65,15 +65,14 @@ class Emulator:
         return self.salasManager.getPeopleNumber(numerosala)
 
 
+
     def job(self):
         sensorNumber = self.numbersensor()
         accion = self.enterorexit()
         if self.candoaccion(sensorNumber, accion):
             self.executeaccion(sensorNumber, accion)
 
-
     def execute(self):
-
         while True:
             self.job()
             time.sleep(ConfigEmu.RELOJ)

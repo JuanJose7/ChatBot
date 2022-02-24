@@ -1,5 +1,6 @@
 from Backend.emulator.configurationEmu.emulatorConfig import ConfigEmu
 
+import json
 
 class Sala:
 
@@ -42,3 +43,6 @@ class Sala:
             self.aumentarOcupacion()
         else:
             self.disminuirOcupacion()
+
+    def toJson(self):
+        return "{\"nombre\":\"" + str(self.nombre) + "\",\"id\": " + str(self.id) + ", \"capacidad\": " + str(self.capacidad) + ", \"ocupacion\":" + str(self.ocupacion) + "}"

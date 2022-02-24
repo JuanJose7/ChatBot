@@ -1,5 +1,5 @@
 class ConfigEmu:
-    RELOJ = 2
+    RELOJ = 10
     ENTER = 0
     EXIT = 1
     MAX_SALAS = 5
