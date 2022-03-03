@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 21.12) (preloaded format=pdflatex 2021.12.9)  9 DEC 2021 20:00
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 21.12) (preloaded format=pdflatex 2021.12.9)  1 MAR 2022 23:43
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"c:/Users/Juan Jo/Desktop/TFG/Latex-Test/test.tex"
-(c:/Users/Juan Jo/Desktop/TFG/Latex-Test/test.tex
+**"c:/Users/Juan Jo/Desktop/TFG-Final/Latex-Test/test.tex"
+(c:/Users/Juan Jo/Desktop/TFG-Final/Latex-Test/test.tex
 LaTeX2e <2021-11-15> patch level 1
 L3 programming layer <2021-11-22> (C:\Users\Juan Jo\AppData\Local\Programs\MiKTeX\tex/latex/base\book.cls
 Document Class: book 2021/10/04 v1.4n Standard LaTeX document class
@@ -49,7 +49,7 @@ Package babel Info: Making > an active character on input line 722.
 File: l3backend-pdftex.def 2021-10-18 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count195
 \l__pdf_internal_box=\box50
-) (c:\Users\Juan Jo\Desktop\TFG\Latex-Test\build\test.aux
+) (c:\Users\Juan Jo\Desktop\TFG-Final\Latex-Test\build\test.aux
 LaTeX Info: Redefining \. on input line 8.
 LaTeX Info: Redefining \% on input line 8.
 )
@@ -83,7 +83,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 {C:/Users/Juan Jo/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2
 
-] (c:\Users\Juan Jo\Desktop\TFG\Latex-Test\build\test.toc
+] (c:\Users\Juan Jo\Desktop\TFG-Final\Latex-Test\build\test.toc
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -103,20 +103,20 @@ LaTeX Info: Redefining \% on input line 10.
 Cap\'{\i }tulo 1.
 [1
 
-] (c:\Users\Juan Jo\Desktop\TFG\Latex-Test\build\test.aux
+] (c:\Users\Juan Jo\Desktop\TFG-Final\Latex-Test\build\test.aux
 LaTeX Info: Redefining \. on input line 8.
 LaTeX Info: Redefining \% on input line 8.
 ) ) 
 Here is how much of TeX's memory you used:
  1813 strings out of 478659
- 30446 string characters out of 2844936
+ 30524 string characters out of 2844936
  341758 words of memory out of 3000000
  19967 multiletter control sequences out of 15000+600000
  409897 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 40i,6n,52p,216b,365s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 40i,6n,52p,222b,365s stack positions out of 5000i,500n,10000p,200000b,80000s
 <C:/Users/Juan Jo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/Juan Jo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Juan Jo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/Juan Jo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Juan Jo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/Juan Jo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsl10.pfb><C:/Users/Juan Jo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on "c:\Users\Juan Jo\Desktop\TFG\Latex-Test\build\test.pdf" (5 pages, 87352 bytes).
+Output written on "c:\Users\Juan Jo\Desktop\TFG-Final\Latex-Test\build\test.pdf" (5 pages, 88405 bytes).
 PDF statistics:
  53 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

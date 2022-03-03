@@ -65,7 +65,6 @@ class Emulator:
         return self.salasManager.getPeopleNumber(numerosala)
 
 
-
     def job(self):
         sensorNumber = self.numbersensor()
         accion = self.enterorexit()

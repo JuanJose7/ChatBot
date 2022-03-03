@@ -22,6 +22,9 @@ class Sala:
     def disminuirOcupacion(self):
         self.ocupacion = self.ocupacion - 1
 
+    def isFull(self):
+        return self.ocupacion == self.capacidad
+
     def __str__(self):
         return self.nombre + "\n     Id: " + str(self.id) + "     Capacidad: " + str(
             self.capacidad) + "     Ocupacion: " + str(self.ocupacion)
