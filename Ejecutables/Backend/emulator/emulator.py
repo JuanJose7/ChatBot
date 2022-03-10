@@ -20,7 +20,9 @@ class Emulator:
     def warmup(salas):
         for index in range(0, len(salas) - 1):
             sala = salas[index]
-            sala.ocupacion = randrange(sala.capacidad)
+            ranNum = randrange(sala.capacidad)
+            sala.ocupacion = ranNum
+            sala.contadorTotal = ranNum
 
         return salas
 

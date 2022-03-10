@@ -14,10 +14,12 @@ class Sala:
         self.id = id
         self.capacidad = capacidad
         self.ocupacion = ocupacion
+        self.contadorTotal = 0
         self.sensor = None
 
     def aumentarOcupacion(self):
         self.ocupacion = self.ocupacion + 1
+        self.contadorTotal = self.contadorTotal + 1
 
     def disminuirOcupacion(self):
         self.ocupacion = self.ocupacion - 1
@@ -27,7 +29,7 @@ class Sala:
 
     def __str__(self):
         return self.nombre + "\n     Id: " + str(self.id) + "     Capacidad: " + str(
-            self.capacidad) + "     Ocupacion: " + str(self.ocupacion)
+            self.capacidad) + "     Ocupacion: " + str(self.ocupacion) + "     Contador Total: " + str(self.contadorTotal)
 
     def canDoAccion(self, accion):
         if accion == ConfigEmu.ENTER:
@@ -48,4 +50,9 @@ class Sala:
             self.disminuirOcupacion()
 
     def toJson(self):
-        return "{\"nombre\":\"" + str(self.nombre) + "\",\"id\": " + str(self.id) + ", \"capacidad\": " + str(self.capacidad) + ", \"ocupacion\":" + str(self.ocupacion) + "}"
+        return "{\"nombre\":\"" + str(self.nombre) + "\"," \
+               "\"id\": " + str(self.id) + ", " \
+               "\"capacidad\": " + str(self.capacidad) + "," \
+               "\"ocupacion\":" + str(self.ocupacion) + ", " \
+               "\"contadorTotal\":" + str(self.contadorTotal) + "}"
+

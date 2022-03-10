@@ -29,6 +29,12 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             return bytes(emulator.salasManager.maxOcupacionJson(), "UTF-8")
         elif operation.operation == "/canEnter":
             return bytes(emulator.salasManager.canEnter(int(operation.id)), "UTF-8")
+        elif operation.operation == "/info":
+            return bytes(emulator.salasManager.info(), "UTF-8")
+        elif operation.operation == "/salaFavorita":
+            return bytes(emulator.salasManager.favoritaSalaJson(), "UTF-8")
+        elif operation.operation == "/porcentajeOcupacion":
+            return bytes(emulator.salasManager.salaPorcentajeOcupacionJson(int(operation.id)), "UTF-8")
 
     def respond(self):
         content = self.createBody()
@@ -42,7 +48,6 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 def emulatorexecute():
     emulator.execute()
-    print(emulator.salasManager.salas[2].toJson())
 
 hilo = threading.Thread(target = emulatorexecute)
 hilo.start()
