@@ -7,3 +7,9 @@ infoConfig = "{ \
     \"n-salas\": 5, \
     \"ocupacionTotal\": 100 \
 }"
+
+errores = {
+    0: "{\"errorCode\":" + str(0) + ", \"description\": \"Sala no encontrada\"}",
+    1: "{\"errorCode\":" + str(1) + ", \"description\": \"Identificador de sala no válido \"}",
+    2: "{\"errorCode\":" + str(2) + ", \"description\": \"Parámetro enviado no reconocido\"}"
+}

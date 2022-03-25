@@ -24,6 +24,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         body = None
         if operation.operation == "/sala":
             body = emulator.salasManager.infoSalaJson(int(operation.id))
+        if operation.operation == "/infoTotalSalas":
+            body = emulator.salasManager.infoTotalSalaJson()
         elif operation.operation == "/currentOcupation":
             body = emulator.salasManager.currentOcupacionJson()
         elif operation.operation == "/lessOcupation":
@@ -39,28 +41,29 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         elif operation.operation == "/porcentajeOcupacion":
             body = emulator.salasManager.salaPorcentajeOcupacionJson(int(operation.id))
 
-        if body is not None:
-            return bytes(body, "UTF-8")
-        else:
-            return None
+        return body
 
     def respond(self):
         print("Route ", self.path)
         operation = Operation(self.path)
 
-        content = self.createBody(operation)
-
-        if content is None:
-            ## error
+        bodyResult = self.createBody(operation)
+        if bodyResult is None:
             self.send_response(500)
             self.send_header('Content-type', 'text/json')
             self.end_headers()
-        else:
+
+        elif bodyResult.status:
             self.send_response(200)
             self.send_header('Content-type', 'text/json')
             self.end_headers()
-            self.wfile.write(content)
+            self.wfile.write(bytes(bodyResult.description, "UTF-8"))
 
+        else:
+            self.send_response(302)
+            self.send_header('Content-type', 'text/json')
+            self.end_headers()
+            self.wfile.write(bytes(bodyResult.description, "UTF-8"))
 
 def emulatorexecute():
     emulator.execute()

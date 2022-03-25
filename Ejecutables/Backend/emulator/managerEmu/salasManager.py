@@ -1,8 +1,10 @@
 import sys
 
 from Backend.configurationBackend.configurationBackend import infoConfig
+from Backend.configurationBackend.configurationBackend import errores
 from Backend.emulator.configurationEmu.salasConfig import salas, sensores
 from Backend.emulator.configurationEmu.emulatorConfig import ConfigEmu
+from Backend.model.result import Result
 
 
 class SalasManager:
@@ -22,21 +24,24 @@ class SalasManager:
 
     def infoSalaJson(self, idSala):
         if 0 <= idSala < ConfigEmu.MAX_SALAS:
-            return str(self.salas[idSala].toJson())
+            return Result(True, str(self.salas[idSala].toJson()))
         else:
-            return str("{\"errorCode\":" + str(6) + ", \"description\": \" Id de sala no válido \"}")
+            return Result(False, errores[1])
+
+    def infoTotalSalaJson(self):
+        return Result(True, self.toJsonSalas(self.salas))
 
     def canEnter(self, idSala):
         if 0 <= idSala < ConfigEmu.MAX_SALAS:
-            return str("{\"canEnterSala\": " + str(not self.salas[idSala].isFull()) + "}")
+            return Result(True, str("{\"canEnterSala\": " + str(not self.salas[idSala].isFull()) + "}"))
         else:
-            return str("{\"errorCode\":" + str(5) + ", \"description\": \" Id de sala no válido \"}")
+            return Result(False, errores[1])
 
     def currentOcupacionJson(self):
         ocupacion = 0
         for salaAux in self.salas:
             ocupacion = ocupacion + salaAux.ocupacion
-        return str("{\"currentOcupacion\": " + str(ocupacion) + "}")
+        return Result(True, str("{\"currentOcupacion\": " + str(ocupacion) + "}"))
 
     def lessOcupacionJson(self):
         ocupacion = sys.maxsize
@@ -47,9 +52,9 @@ class SalasManager:
                 sala = salaAux
 
         if sala is not None:
-            return str(sala.toJson())
+            return Result(True, str(sala.toJson()))
         else:
-            return str("{\"errorCode\":" + str(0) + ", \"description\": \" No existe sala con minima ocupación \"}")
+            return Result(False, errores[0])
 
     def maxOcupacionJson(self):
         ocupacion = -sys.maxsize
@@ -59,9 +64,9 @@ class SalasManager:
                 ocupacion = salaAux.ocupacion
                 sala = salaAux
         if sala is not None:
-            return str(sala.toJson())
+            return Result(True, str(sala.toJson()))
         else:
-            return str("{\"errorCode\":" + str(1) + ", \"description\": \" No existe sala con maxima ocupación \"}")
+            return Result(False, errores[0])
 
     def favoritaSalaJson(self):
         total = -sys.maxsize
@@ -72,9 +77,9 @@ class SalasManager:
                 sala = salaAux
 
         if sala is not None:
-            return str(sala.toJson())
+            return Result(True, str(sala.toJson()))
         else:
-            return str("{\"errorCode\":" + str(2) + ", \"description\": \" No existe sala favorita \"}")
+            return Result(False, errores[0])
 
     def salaPorcentajeOcupacionJson(self, porcentaje):
         if 0 <= porcentaje <= 100:
@@ -85,14 +90,22 @@ class SalasManager:
                     break
 
             if sala is not None:
-                return str(sala.toJson())
+                return Result(True, str(sala.toJson()))
             else:
-                return str("{\"errorCode\":" + str(3) + ", \"description\": \" No existe sala con ese porcentaje \"}")
+                return Result(False, errores[0])
         else:
-            return str("{\"errorCode\":" + str(4) + ", \"description\": \" Porcentaje no válido \"}")
+            return Result(False, errores[2])
+
+    def toJsonSalas(self, salas):
+        resultjson = "["
+        for salaAux in salas:
+            resultjson = resultjson + salaAux.toJson() + ","
+        resultjson = resultjson + "]"
+
+        return str(resultjson)
 
     def info(self):
-        return str(infoConfig)
+        return Result(True, str(infoConfig))
 
     def printStatus(self):
         for salaAux in self.salas:

@@ -2,11 +2,11 @@ from ..modelEmu.sala import Sala
 from ..modelEmu.sensor import Sensor
 
 salas = [
-    Sala("Sala Norte", 0, 4, 0),
-    Sala("Sala Oeste", 1, 3, 0),
+    Sala("Sala Norte", 0, 8, 0),
+    Sala("Sala Oeste", 1, 7, 0),
     Sala("Sala Sur", 2, 6, 0),
-    Sala("Sala Sorento", 3, 5, 0),
-    Sala("Sala Espacio", 4, 4, 0),
+    Sala("Sala Sorento", 3, 7, 0),
+    Sala("Sala Espacio", 4, 6, 0),
 ]
 
 sensores = [
