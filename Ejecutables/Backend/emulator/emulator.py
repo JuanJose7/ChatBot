@@ -1,4 +1,4 @@
-import schedule
+
 import time
 
 from random import randrange
