@@ -7,7 +7,7 @@ import requests
 
 from telebot import types
 
-API_TOKEN = '5260264151:AAFmQ04QpQJ-epSw22C_qOJP0Qhaf2GUAnw'
+from Bot.configurationBot.botConfig import salas, operaciones, API_TOKEN, URL_NGROK
 
 bot = telebot.TeleBot(API_TOKEN)
 request_dict = {}
@@ -17,10 +17,14 @@ bot = telebot.TeleBot(API_TOKEN)
 class Request:
     def __init__(self, name):
         self.name = name
-        self.sala = None
+        self.sala = ""
+        self.indexSala = -1
+        self.operation = None
 
 # Handle '/start' and '/help'
-@bot.message_handler(commands=['help', 'start'])
+@bot.message_handler(commands=['ayuda',
+                               'inicio',
+                               'hola'])
 def send_welcome(message):
 
     msg = bot.reply_to(message, """\
@@ -32,16 +36,47 @@ Hola, ¿que tal?.
 
 def process_name_step(message):
     try:
+
         chat_id = message.chat.id
         name = message.text
         user = Request(name)
         request_dict[chat_id] = user
+        user = request_dict[chat_id]
 
         markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
-        markup.add('Sala 1', 'Sala 2', 'Sala 3', 'Sala 4', 'Sala 5')
+        for operacion in operaciones:
+            markup.add(operacion.name)
 
-        msg = bot.reply_to(message, 'Bienvenido ' + user.name + '\n ¿De que sala quieres información?', reply_markup=markup)
-        bot.register_next_step_handler(msg, sendReponse)
+        msg = bot.reply_to(message, 'Bienvenido ' + user.name + '\n ¿Que operación quieres realizar?', reply_markup=markup)
+        bot.register_next_step_handler(msg, process_operation_step)
+
+    except Exception as e:
+        bot.reply_to(message, 'Ha habido un error al recoger la operación \n' + str(e))
+
+def process_operation_step(message):
+    try:
+        chat_id = message.chat.id
+        operation = message.text
+        user = request_dict[chat_id]
+        index = searchOperation(operation)
+        if index != -1:
+            user.operation = operaciones[index]
+
+            if (user.operation.showKeyboard):
+                markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
+                for sala in salas:
+                    markup.add(sala)
+
+                msg = bot.reply_to(message, 'Operación seleccionada ' + operation + '\n ¿De que sala quieres información?',
+                                   reply_markup=markup)
+                bot.register_next_step_handler(msg, process_sala_step)
+
+            else:
+                sendReponse(message, user)
+
+        else:
+            raise Exception("Operación NO reconocida")
+
     except Exception as e:
         bot.reply_to(message, 'Ha habido un error al recoger el nombre')
 
@@ -50,23 +85,26 @@ def process_sala_step(message):
         chat_id = message.chat.id
         sala = message.text
         user = request_dict[chat_id]
-        if (sala == u'Sala 1') or \
-            (sala == u'Sala 2') or\
-            (sala == u'Sala 3') or \
-            (sala == u'Sala 4') or \
-            (sala == u'Sala 5'):
+
+        if sala in salas:
+            indexSala = salas.index(sala)
             user.sala = sala
+            user.indexSala = indexSala
+
+            sendReponse(message, user)
         else:
             raise Exception("Sala no reconocida")
 
-        bot.send_message(chat_id, 'Usuario ' + user.name + '\n desea información sala:' + str(user.sala) + '\n')
-
     except Exception as e:
-        bot.reply_to(message, 'Ha habido un error al recoger la sala')
+        bot.reply_to(message, 'Ha habido un error al recoger la sala \n' + str(e))
 
+def sendReponse(message, user):
+    url = ""
+    if (user.operation.showKeyboard) :
+        url = URL_NGROK + "/" + user.operation.oppathlist + "?id=" + str(user.indexSala)
+    else:
+        url = URL_NGROK + "/" + user.operation.oppathlist
 
-def sendReponse(message):
-    url = "http://dade-92-189-94-207.ngrok.io/sala?id=0"
     #querystring = {"country":"Denmark"}
     #headers = {
     #    'x-rapidapi-host': "covid-19-coronavirus-statistics.p.rapidapi.com",
@@ -78,6 +116,12 @@ def sendReponse(message):
     bot.reply_to(message, str(response.json()))
     #else:
         #bot.reply_to(message, "Error: {!s} , StatusCode: {!s}, Message: {!s}".format(response.json()["error"], response.json()["statusCode"], response.json()["message"]))
+
+def searchOperation (nameoperation):
+    for i in range(len(operaciones)):
+        if operaciones[i].name == nameoperation:
+            return i
+    return -1
 
 # Enable saving next step handlers to file "./.handlers-saves/step.save".
 # Delay=2 means that after any change in next step handlers (e.g. calling register_next_step_handler())

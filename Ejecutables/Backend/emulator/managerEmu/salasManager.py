@@ -33,7 +33,7 @@ class SalasManager:
 
     def canEnter(self, idSala):
         if 0 <= idSala < ConfigEmu.MAX_SALAS:
-            return Result(True, str("{\"canEnterSala\": " + str(not self.salas[idSala].isFull()) + "}"))
+            return Result(True, str("{\"canEnterSala\":" + str(not self.salas[idSala].isFull()).lower() + "}"))
         else:
             return Result(False, errores[1])
 
@@ -41,7 +41,7 @@ class SalasManager:
         ocupacion = 0
         for salaAux in self.salas:
             ocupacion = ocupacion + salaAux.ocupacion
-        return Result(True, str("{\"currentOcupacion\": " + str(ocupacion) + "}"))
+        return Result(True, str("{\"currentOcupacion\":" + str(ocupacion) + "}"))
 
     def lessOcupacionJson(self):
         ocupacion = sys.maxsize
@@ -100,7 +100,7 @@ class SalasManager:
         resultjson = "["
         for salaAux in salas:
             resultjson = resultjson + salaAux.toJson() + ","
-        resultjson = resultjson + "]"
+        resultjson = resultjson[:-1] + "]"
 
         return str(resultjson)
 
