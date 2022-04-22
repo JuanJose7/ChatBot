@@ -2,10 +2,12 @@ import http.server
 import socketserver
 import threading
 
-from Backend.model.route import Operation
+from Backend.configurationBackend.configurationBackend import PORT
+from Backend.model.operation import Operation
 from emulator.emulator import Emulator
 
 emulator = Emulator()
+
 
 class Handler(http.server.SimpleHTTPRequestHandler):
 
@@ -65,12 +67,13 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(bytes(bodyResult.description, "UTF-8"))
 
+
 def emulatorexecute():
     emulator.execute()
 
-hilo = threading.Thread(target = emulatorexecute)
+
+hilo = threading.Thread(target=emulatorexecute)
 hilo.start()
 
-print("Ejecutando server...")
-httpd = socketserver.TCPServer(('', 8000), Handler)
+httpd = socketserver.TCPServer(('', PORT), Handler)
 httpd.serve_forever()
