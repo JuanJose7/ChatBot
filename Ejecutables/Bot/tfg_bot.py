@@ -8,6 +8,7 @@ import requests
 from telebot import types
 
 from Bot.configurationBot.botConfig import salas, operaciones, API_TOKEN, URL_NGROK
+from Bot.model.operation import Operation
 
 bot = telebot.TeleBot(API_TOKEN)
 request_dict = {}
@@ -32,6 +33,19 @@ Hola, ¿que tal?.
 """)
 
     bot.register_next_step_handler(msg, process_name_step)
+
+# Handle '/info' and '/help'
+@bot.message_handler(commands=['info',
+                               'help'])
+def send_info(message):
+    chat_id = message.chat.id
+    name = message.text
+    user = Request(name)
+    request_dict[chat_id] = user
+    user = request_dict[chat_id]
+
+    user.operation = Operation('Información general del gimnasio', 'info', False)
+    sendReponse(message, user)
 
 def process_name_step(message):
     try:
@@ -99,7 +113,7 @@ def process_sala_step(message):
 
 def sendReponse(message, user):
     url = ""
-    if (user.operation.showKeyboard) :
+    if (user.operation.showKeyboard):
         url = URL_NGROK + "/" + user.operation.oppathlist + "?id=" + str(user.indexSala)
     else:
         url = URL_NGROK + "/" + user.operation.oppathlist
