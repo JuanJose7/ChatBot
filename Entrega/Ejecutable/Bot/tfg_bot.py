@@ -22,7 +22,8 @@ class Request:
         self.operation = None
 
 # Handle '/start' and '/help'
-@bot.message_handler(commands=['inicio',
+@bot.message_handler(commands=['ayuda',
+                               'inicio',
                                'hola'])
 def send_welcome(message):
 

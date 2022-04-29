@@ -23,7 +23,6 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         if operation.checkIsError():
             return None
 
-        ## API define
         body = None
         if operation.operation == "/sala":
             body = emulator.salasManager.infoSalaJson(int(operation.id))
