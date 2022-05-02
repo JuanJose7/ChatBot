@@ -43,13 +43,11 @@ def send_info(message):
     user = Request(name)
     request_dict[chat_id] = user
     user = request_dict[chat_id]
-
-    user.operation = Operation('Información general del gimnasio', 'info', False)
+    user.operation = Operation('Información general del gimnasio', 'info', False, ["hora-apertura", "hora-cierre", "nombre", "direccion", "mensualidad", "n-salas", "ocupacionTotal"])
     sendReponse(message, user)
 
 def process_name_step(message):
     try:
-
         chat_id = message.chat.id
         name = message.text
         user = Request(name)
@@ -126,7 +124,7 @@ def sendReponse(message, user):
     response = requests.request("GET", url)
 
     #if not response.json()["error"]:
-    bot.reply_to(message, str(response.json()))
+    bot.reply_to(message, user.operation.prettyOutput(str(response.text.replace("\'", "\""))))
     #else:
         #bot.reply_to(message, "Error: {!s} , StatusCode: {!s}, Message: {!s}".format(response.json()["error"], response.json()["statusCode"], response.json()["message"]))
 
