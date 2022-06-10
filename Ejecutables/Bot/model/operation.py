@@ -7,10 +7,12 @@ class Operation:
                  name,
                  oppathlist,
                  showkeyboard,
+                 indexsala,
                  fieldJson
                  ):
         self.name = name
         self.oppathlist = oppathlist
+        self.indexsala = indexsala
         self.showKeyboard = showkeyboard
         self.fieldjson = fieldJson
 

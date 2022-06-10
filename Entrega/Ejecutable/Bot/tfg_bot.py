@@ -8,6 +8,7 @@ import requests
 from telebot import types
 
 from Bot.configurationBot.botConfig import salas, operaciones, API_TOKEN, URL_NGROK
+from Bot.model.operation import Operation
 
 bot = telebot.TeleBot(API_TOKEN)
 request_dict = {}
@@ -17,13 +18,12 @@ bot = telebot.TeleBot(API_TOKEN)
 class Request:
     def __init__(self, name):
         self.name = name
+        self.indexsala = -1
         self.sala = ""
-        self.indexSala = -1
         self.operation = None
 
 # Handle '/start' and '/help'
-@bot.message_handler(commands=['ayuda',
-                               'inicio',
+@bot.message_handler(commands=['inicio',
                                'hola'])
 def send_welcome(message):
 
@@ -34,9 +34,20 @@ Hola, ¿que tal?.
 
     bot.register_next_step_handler(msg, process_name_step)
 
+# Handle '/info' and '/help'
+@bot.message_handler(commands=['info',
+                               'help'])
+def send_info(message):
+    chat_id = message.chat.id
+    name = message.text
+    user = Request(name)
+    request_dict[chat_id] = user
+    user = request_dict[chat_id]
+    user.operation =  Operation('Información general del gimnasio', 'info', False, -1, ["hora-apertura", "hora-cierre", "nombre", "direccion", "mensualidad", "n-salas", "ocupacionTotal"])
+    sendReponse(message, user)
+
 def process_name_step(message):
     try:
-
         chat_id = message.chat.id
         name = message.text
         user = Request(name)
@@ -51,7 +62,7 @@ def process_name_step(message):
         bot.register_next_step_handler(msg, process_operation_step)
 
     except Exception as e:
-        bot.reply_to(message, 'Ha habido un error al recoger la operación \n' + str(e))
+        bot.reply_to(message, 'Ha habido un error al recogerel nombre de la sala \n' + str(e))
 
 def process_operation_step(message):
     try:
@@ -63,13 +74,17 @@ def process_operation_step(message):
             user.operation = operaciones[index]
 
             if (user.operation.showKeyboard):
-                markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
-                for sala in salas:
-                    markup.add(sala)
+                if (user.operation.indexsala == -1):
+                    markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
+                    for sala in salas:
+                        markup.add(sala)
 
-                msg = bot.reply_to(message, 'Operación seleccionada ' + operation + '\n ¿De que sala quieres información?',
-                                   reply_markup=markup)
-                bot.register_next_step_handler(msg, process_sala_step)
+                    msg = bot.reply_to(message, 'Operación seleccionada ' + operation + '\n ¿De que sala quieres información?',
+                                       reply_markup=markup)
+                    bot.register_next_step_handler(msg, process_sala_step)
+                else:
+                    user.indexsala = user.operation.indexsala
+                    sendReponse(message, user)
 
             else:
                 sendReponse(message, user)
@@ -78,7 +93,7 @@ def process_operation_step(message):
             raise Exception("Operación NO reconocida")
 
     except Exception as e:
-        bot.reply_to(message, 'Ha habido un error al recoger el nombre')
+        bot.reply_to(message, 'Ha habido un error al recoger la operación')
 
 def process_sala_step(message):
     try:
@@ -89,7 +104,7 @@ def process_sala_step(message):
         if sala in salas:
             indexSala = salas.index(sala)
             user.sala = sala
-            user.indexSala = indexSala
+            user.indexsala = indexSala
 
             sendReponse(message, user)
         else:
@@ -100,8 +115,8 @@ def process_sala_step(message):
 
 def sendReponse(message, user):
     url = ""
-    if (user.operation.showKeyboard) :
-        url = URL_NGROK + "/" + user.operation.oppathlist + "?id=" + str(user.indexSala)
+    if (user.operation.showKeyboard):
+        url = URL_NGROK + "/" + user.operation.oppathlist + "?id=" + str(user.indexsala)
     else:
         url = URL_NGROK + "/" + user.operation.oppathlist
 
@@ -113,7 +128,7 @@ def sendReponse(message, user):
     response = requests.request("GET", url)
 
     #if not response.json()["error"]:
-    bot.reply_to(message, str(response.json()))
+    bot.reply_to(message, user.operation.prettyOutput(str(response.text.replace("\'", "\""))))
     #else:
         #bot.reply_to(message, "Error: {!s} , StatusCode: {!s}, Message: {!s}".format(response.json()["error"], response.json()["statusCode"], response.json()["message"]))
 

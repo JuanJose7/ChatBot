@@ -23,6 +23,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         if operation.checkIsError():
             return None
 
+        ## API define
         body = None
         if operation.operation == "/sala":
             body = emulator.salasManager.infoSalaJson(int(operation.id))
@@ -70,7 +71,6 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 def emulatorexecute():
     emulator.execute()
-
 
 hilo = threading.Thread(target=emulatorexecute)
 hilo.start()

@@ -1,11 +1,9 @@
 import sys
-
 from Backend.configurationBackend.configurationBackend import infoConfig
 from Backend.configurationBackend.configurationBackend import errores
 from Backend.emulator.configurationEmu.salasConfig import salas, sensores
 from Backend.emulator.configurationEmu.emulatorConfig import ConfigEmu
 from Backend.model.result import Result
-
 
 class SalasManager:
 

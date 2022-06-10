@@ -72,7 +72,6 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 def emulatorexecute():
     emulator.execute()
 
-
 hilo = threading.Thread(target=emulatorexecute)
 hilo.start()
 
