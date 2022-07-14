@@ -3,10 +3,9 @@ import time
 
 from random import randrange
 
-from Backend.emulator.configurationEmu.emulatorConfig import ConfigEmu
-from Backend.emulator.configurationEmu.salasConfig import sensores, salas
-from Backend.emulator.managerEmu.salasManager import SalasManager
-
+from .configurationEmu.emulatorConfig import ConfigEmu
+from .configurationEmu.salasConfig import sensores, salas
+from .managerEmu.salasManager import SalasManager
 
 class Emulator:
 

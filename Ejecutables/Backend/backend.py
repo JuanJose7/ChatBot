@@ -2,12 +2,11 @@ import http.server
 import socketserver
 import threading
 
-from Backend.configurationBackend.configurationBackend import PORT
-from Backend.model.operation import Operation
 from emulator.emulator import Emulator
+from configurationBackend.configurationBackend import PORT
+from model.operation import Operation
 
 emulator = Emulator()
-
 
 class Handler(http.server.SimpleHTTPRequestHandler):
 

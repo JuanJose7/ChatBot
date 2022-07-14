@@ -7,8 +7,8 @@ import requests
 
 from telebot import types
 
-from Bot.configurationBot.botConfig import salas, operaciones, API_TOKEN, URL_NGROK
-from Bot.model.operation import Operation
+from configurationBot.botConfig import salas, operaciones, API_TOKEN, URL_NGROK
+from configurationBot.botConfig import Operation
 
 bot = telebot.TeleBot(API_TOKEN)
 request_dict = {}

@@ -1,5 +1,6 @@
-from Backend.emulator.configurationEmu.emulatorConfig import ConfigEmu
+from ..configurationEmu.emulatorConfig import ConfigEmu
 import json
+
 class Sala:
     # init method or constructor
     def __init__(self,

@@ -1,7 +1,7 @@
-from Bot.model.operation import Operation
+from .operation import Operation
 
 API_TOKEN = '5260264151:AAFmQ04QpQJ-epSw22C_qOJP0Qhaf2GUAnw'
-URL_NGROK = 'http://20c7-92-189-94-207.ngrok.io'
+URL_NGROK = 'http://b4c2-92-189-94-207.ngrok.io'
 
 salas = [
     'Sala Norte',
